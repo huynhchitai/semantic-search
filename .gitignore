@@ -1,0 +1,22 @@
+node_modules
+.next
+.vercel
+out
+
+# env
+.env
+.env.local
+.env*.local
+
+# GCP service-account keys — never commit
+gcp-key.json
+*-service-account*.json
+service-account*.json
+credentials.json
+*.pem
+
+# misc
+*.log
+.DS_Store
+next-env.d.ts
+tsconfig.tsbuildinfo

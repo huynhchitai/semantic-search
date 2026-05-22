@@ -1,0 +1,1046 @@
+/* ==========================================================================
+   Semantic Search — Library Archive / Card Catalog aesthetic
+   Light theme. Warm aged-cream surfaces, deep ink, transitional-serif feel,
+   catalog-drawer motifs, monospace call numbers, hairline rules.
+   ========================================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Surfaces — aged-cream palette */
+  --cream: #f5f0e8;
+  --cream-deep: #ece5d4;
+  --cream-card: #faf7f2;
+  --cream-tab: #e8dfc8;
+
+  /* Ink — deep warm charcoal */
+  --ink: #1c1510;
+  --ink-soft: #4a3f35;
+  --ink-quiet: #8a7968;
+
+  /* Accent — burgundy / claret */
+  --burgundy: #7c1d2a;
+  --burgundy-light: #a84050;
+
+  /* Score colors */
+  --score-excellent: #1a5c3a;
+  --score-excellent-bg: #e8f5ee;
+  --score-strong: #1a3f6b;
+  --score-strong-bg: #e8eef8;
+  --score-moderate: #6b4c1a;
+  --score-moderate-bg: #f8f0e0;
+  --score-weak: #5a3a3a;
+  --score-weak-bg: #f5eded;
+
+  /* Rules */
+  --rule: #c8b89a;
+  --rule-soft: #ddd3bc;
+  --rule-heavy: #8a7250;
+
+  /* Sepia tones */
+  --sepia: #7a5c38;
+  --sepia-mid: #b0956a;
+
+  /* Font variables */
+  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Spline Sans', system-ui, sans-serif;
+  --font-mono: 'Spline Sans Mono', 'Courier New', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base reset
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Subtle grain texture via repeating background */
+.catalog-body {
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(124,90,56,0.04) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(124,29,42,0.03) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-size: auto, auto, 200px 200px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Typography utilities
+   -------------------------------------------------------------------------- */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* --------------------------------------------------------------------------
+   4. Navigation bar — catalog drawer header
+   -------------------------------------------------------------------------- */
+.catalog-bar {
+  @apply sticky top-0 z-50 border-b;
+  border-color: var(--rule-heavy);
+  background: var(--cream-deep);
+  box-shadow: 0 1px 0 var(--rule-soft), 0 2px 8px rgba(28,21,16,0.06);
+}
+
+.catalog-bar::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(to right, var(--burgundy), var(--sepia-mid), var(--burgundy));
+}
+
+.catalog-bar-inner {
+  @apply mx-auto flex items-center justify-between px-6 py-3;
+  max-width: 1200px;
+}
+
+.catalog-brand {
+  @apply flex items-center gap-3 no-underline;
+  text-decoration: none;
+}
+
+.catalog-call-number {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--burgundy);
+  background: var(--cream-tab);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
+
+.catalog-title-mark {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.catalog-nav {
+  @apply flex items-center gap-1;
+}
+
+.catalog-nav-link {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.catalog-nav-link:hover {
+  color: var(--ink);
+  border-color: var(--rule);
+  background: var(--cream-card);
+}
+
+.catalog-nav-link--active {
+  color: var(--burgundy);
+  border-color: var(--rule);
+  background: var(--cream-card);
+}
+
+.catalog-nav-link--external {
+  color: var(--sepia);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-nav-link { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero / page header
+   -------------------------------------------------------------------------- */
+.page-hero {
+  @apply mx-auto px-6 pt-14 pb-10;
+  max-width: 1200px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 0.75rem;
+}
+
+.hero-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 1.0;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.hero-heading em {
+  font-style: italic;
+  color: var(--burgundy);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  max-width: 56ch;
+  line-height: 1.65;
+  margin-top: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Main layout — two-column catalog
+   -------------------------------------------------------------------------- */
+.catalog-main {
+  @apply mx-auto px-6 py-10;
+  max-width: 1200px;
+}
+
+.catalog-grid {
+  @apply grid gap-8;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .catalog-grid {
+    grid-template-columns: 2fr 3fr;
+    align-items: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Panel — index card drawer
+   -------------------------------------------------------------------------- */
+.index-panel,
+.search-panel {
+  @apply rounded-none border;
+  background: var(--cream-card);
+  border-color: var(--rule);
+  box-shadow: 0 1px 3px rgba(28,21,16,0.08), 4px 4px 0 var(--cream-tab);
+}
+
+.panel-header {
+  @apply flex items-center justify-between px-5 py-4 border-b;
+  border-color: var(--rule);
+  background: var(--cream-deep);
+}
+
+.panel-heading {
+  @apply flex items-center gap-3;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.call-number {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--burgundy);
+  background: var(--cream-tab);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
+}
+
+.btn-ghost {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-ghost:hover {
+  background: var(--cream-tab);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-ghost { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   8. Document entry cards
+   -------------------------------------------------------------------------- */
+.doc-list {
+  @apply flex flex-col divide-y;
+  divide-color: var(--rule-soft);
+}
+
+.doc-entry {
+  @apply px-5 py-4;
+}
+
+.doc-entry-header {
+  @apply flex items-center justify-between mb-3;
+}
+
+.doc-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sepia-mid);
+}
+
+.btn-remove {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--ink-quiet);
+  background: transparent;
+  border: 1px solid transparent;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.12s ease;
+}
+
+.btn-remove:hover {
+  color: var(--burgundy);
+  border-color: var(--rule);
+  background: var(--cream);
+}
+
+.doc-input {
+  @apply w-full mb-2;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  padding: 7px 10px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.doc-input:focus {
+  border-color: var(--sepia);
+  background: var(--cream-card);
+}
+
+.doc-textarea {
+  @apply w-full;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  padding: 7px 10px;
+  outline: none;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.15s ease;
+}
+
+.doc-textarea:focus {
+  border-color: var(--sepia);
+  background: var(--cream-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doc-input, .doc-textarea { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   9. Panel footer + char meter
+   -------------------------------------------------------------------------- */
+.panel-footer {
+  @apply px-5 py-4 border-t flex flex-col gap-3;
+  border-color: var(--rule-soft);
+  background: var(--cream-deep);
+}
+
+.char-meter {}
+
+.char-meter-label {
+  @apply flex justify-between mb-1;
+}
+
+.char-bar {
+  height: 4px;
+  background: var(--rule-soft);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.char-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--sepia), var(--burgundy));
+  transition: width 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .char-bar-fill { transition: none; }
+}
+
+.panel-actions {
+  @apply flex items-center justify-between gap-3;
+}
+
+.btn-primary {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cream);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 8px 20px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   10. Index result notice
+   -------------------------------------------------------------------------- */
+.index-result {
+  @apply flex items-start gap-3 px-5 py-4 border-t text-sm;
+  border-color: var(--rule-soft);
+  font-family: var(--font-body);
+}
+
+.index-result--ok {
+  background: var(--score-excellent-bg);
+  color: var(--score-excellent);
+}
+
+.index-result--err {
+  background: var(--score-weak-bg);
+  color: var(--score-weak);
+}
+
+.result-icon {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   11. Search panel
+   -------------------------------------------------------------------------- */
+.search-panel {
+  @apply flex flex-col;
+}
+
+.search-form {
+  @apply px-5 py-5 border-b;
+  border-color: var(--rule-soft);
+}
+
+.search-input-wrap {
+  @apply flex items-center border;
+  border-color: var(--rule);
+  background: var(--cream);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-input-wrap:focus-within {
+  border-color: var(--sepia);
+  box-shadow: 0 0 0 3px rgba(122,92,56,0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-input-wrap { transition: none; }
+}
+
+.search-icon {
+  @apply px-3 flex-shrink-0;
+  color: var(--ink-quiet);
+}
+
+.search-input {
+  @apply flex-1 py-3 pr-2 outline-none;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+}
+
+.search-input::placeholder {
+  color: var(--ink-quiet);
+  font-style: italic;
+}
+
+.search-input:disabled {
+  color: var(--ink-quiet);
+  cursor: not-allowed;
+}
+
+.btn-search {
+  @apply flex items-center justify-center px-5 py-3 flex-shrink-0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cream);
+  background: var(--ink);
+  border: none;
+  border-left: 1px solid var(--rule);
+  cursor: pointer;
+  min-width: 80px;
+  letter-spacing: 0.03em;
+  transition: background 0.15s ease;
+}
+
+.btn-search:hover:not(:disabled) {
+  background: var(--burgundy);
+}
+
+.btn-search:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-search { transition: none; }
+}
+
+.char-hint {
+  @apply mt-2 text-xs text-right;
+  font-family: var(--font-mono);
+  color: var(--ink-quiet);
+}
+
+.search-error {
+  @apply flex items-start gap-3 px-5 py-4 m-5 text-sm border;
+  border-color: var(--burgundy);
+  background: var(--score-weak-bg);
+  color: var(--burgundy);
+}
+
+/* --------------------------------------------------------------------------
+   12. Results section
+   -------------------------------------------------------------------------- */
+.results-section {
+  @apply px-5 py-5;
+}
+
+.results-meta {
+  @apply flex items-center justify-between mb-4 pb-3 border-b;
+  border-color: var(--rule-soft);
+}
+
+.results-count {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+
+.results-time {
+  font-size: 0.7rem;
+  color: var(--ink-quiet);
+}
+
+.results-empty {
+  @apply py-8 text-center;
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--ink-quiet);
+  font-size: 0.9rem;
+}
+
+.result-list {
+  @apply flex flex-col gap-4;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   13. Result card — catalog index card
+   -------------------------------------------------------------------------- */
+.result-card {
+  @apply border;
+  border-color: var(--rule);
+  background: var(--cream-card);
+  box-shadow: 0 1px 4px rgba(28,21,16,0.06);
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.result-card:hover {
+  box-shadow: 0 3px 12px rgba(28,21,16,0.12);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result-card { transition: none; }
+  .result-card:hover { transform: none; }
+}
+
+.result-card-inner {
+  @apply flex;
+}
+
+/* Catalog drawer tab on the left */
+.result-tab {
+  @apply flex flex-col items-center justify-start py-3 px-2 border-r flex-shrink-0;
+  border-color: var(--rule-soft);
+  background: var(--cream-tab);
+  min-width: 40px;
+}
+
+.result-rank {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--sepia-mid);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.result-body {
+  @apply flex-1 p-4;
+}
+
+.result-header {
+  @apply flex items-start justify-between gap-4 mb-3;
+}
+
+.result-title-group {
+  @apply flex flex-col gap-1 min-w-0;
+}
+
+.result-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+a.result-title:hover {
+  color: var(--burgundy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.result-title--no-link {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin: 0;
+}
+
+.result-url {
+  font-size: 0.65rem;
+  color: var(--ink-quiet);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30ch;
+}
+
+/* Score badge */
+.score-badge {
+  @apply flex-shrink-0 flex flex-col items-end gap-1;
+  min-width: 80px;
+}
+
+.score-pct {
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.score-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.score-bar-wrap {
+  width: 100%;
+  height: 3px;
+  background: rgba(0,0,0,0.08);
+}
+
+.score-bar {
+  height: 100%;
+  border-radius: 0;
+  transition: width 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score-bar { transition: none; }
+}
+
+.score--excellent .score-pct,
+.score--excellent .score-label  { color: var(--score-excellent); }
+.score--excellent .score-bar    { background: var(--score-excellent); }
+.score--strong .score-pct,
+.score--strong .score-label     { color: var(--score-strong); }
+.score--strong .score-bar       { background: var(--score-strong); }
+.score--moderate .score-pct,
+.score--moderate .score-label   { color: var(--score-moderate); }
+.score--moderate .score-bar     { background: var(--score-moderate); }
+.score--weak .score-pct,
+.score--weak .score-label       { color: var(--score-weak); }
+.score--weak .score-bar         { background: var(--score-weak); }
+
+/* Snippet with mark highlighting */
+.result-snippet {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.result-snippet mark {
+  background: rgba(124, 29, 42, 0.12);
+  color: var(--burgundy);
+  font-weight: 600;
+  padding: 0 2px;
+  border-radius: 0;
+}
+
+/* --------------------------------------------------------------------------
+   14. Spinner
+   -------------------------------------------------------------------------- */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+.spinner--light {
+  border-color: rgba(255,255,255,0.25);
+  border-top-color: #fff;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; opacity: 0.6; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Page-load stagger reveal
+   -------------------------------------------------------------------------- */
+.stagger-child {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fade-up 0.45s ease forwards;
+  animation-delay: calc(var(--i, 0) * 80ms + 100ms);
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-child {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Hero children animate in on load */
+.hero-animate {
+  opacity: 0;
+  animation: fade-up 0.5s ease forwards;
+}
+
+.hero-animate:nth-child(1) { animation-delay: 60ms; }
+.hero-animate:nth-child(2) { animation-delay: 160ms; }
+.hero-animate:nth-child(3) { animation-delay: 260ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate { opacity: 1; animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   16. Footer
+   -------------------------------------------------------------------------- */
+.catalog-footer {
+  @apply border-t mt-16;
+  border-color: var(--rule-heavy);
+  background: var(--cream-deep);
+}
+
+.catalog-footer-inner {
+  @apply mx-auto flex flex-col items-start justify-between gap-3 px-6 py-5;
+  max-width: 1200px;
+}
+
+@media (min-width: 640px) {
+  .catalog-footer-inner {
+    @apply flex-row items-center;
+  }
+}
+
+.footer-colophon {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-quiet);
+  text-transform: uppercase;
+}
+
+.footer-colophon a {
+  color: var(--ink-quiet);
+  text-decoration: none;
+  transition: color 0.12s ease;
+}
+
+.footer-colophon a:hover {
+  color: var(--ink);
+}
+
+.footer-sep {
+  @apply mx-2;
+  color: var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+   17. How-it-works page
+   -------------------------------------------------------------------------- */
+.how-main {
+  @apply mx-auto px-6 py-10;
+  max-width: 1100px;
+}
+
+.how-hero {
+  @apply pb-10 border-b;
+  border-color: var(--rule-soft);
+}
+
+.how-pipeline {
+  @apply mt-12 border p-6;
+  border-color: var(--rule);
+  background: var(--cream-card);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.how-pipeline-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 0.5rem;
+}
+
+.how-content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 900px) {
+  .how-content-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.how-steps {
+  @apply mt-12 flex flex-col gap-8;
+}
+
+.how-step {
+  @apply grid gap-x-6 pb-8 border-b;
+  grid-template-columns: 2.5rem 1fr;
+  border-color: var(--rule-soft);
+}
+
+.how-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--burgundy);
+  margin-top: 4px;
+}
+
+.how-step-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.how-step-body {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.how-step-body code {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: var(--cream-tab);
+  border: 1px solid var(--rule-soft);
+  padding: 1px 5px;
+  color: var(--ink);
+}
+
+.how-aside {
+  @apply flex flex-col gap-6;
+}
+
+.how-note {
+  @apply border p-5;
+  border-color: var(--rule);
+  background: var(--cream-card);
+}
+
+.how-note--accent {
+  box-shadow: 3px 3px 0 var(--burgundy);
+}
+
+.how-note-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.how-note-body {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.how-note-body code {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  background: var(--cream-tab);
+  border: 1px solid var(--rule-soft);
+  padding: 1px 4px;
+}
+
+.how-cta {
+  @apply mt-20 mb-16 pt-10 border-t grid gap-8;
+  border-color: var(--rule-heavy);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .how-cta {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.how-cta-heading {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.how-cta-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 55ch;
+}
+
+.btn-cta {
+  @apply inline-flex items-center gap-2 mt-5 px-6 py-3 text-sm font-semibold;
+  font-family: var(--font-body);
+  background: var(--ink);
+  color: var(--cream);
+  border: 1px solid var(--ink);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  letter-spacing: 0.02em;
+}
+
+.btn-cta:hover {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta { transition: none; }
+}
+
+/* Security stance two-column grid */
+.how-security-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .how-security-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
