@@ -2,7 +2,7 @@
 
 Paste your documents — search by meaning, not keywords, with highlighted snippets.
 
-> Portfolio Project #7 — [Tai Huynh](https://github.com/0CCHacker)
+> Portfolio Project #7 — [Tai Huynh](https://github.com/huynhchitai)
 
 ---
 

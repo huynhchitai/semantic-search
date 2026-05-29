@@ -393,9 +393,9 @@ export default function HowItWorks() {
             Tai Huynh · 2026 · Semantic Search · Tai Huynh · Portfolio #07
           </p>
           <p className="footer-colophon">
-            <a href="https://github.com/0CCHacker">Tai Huynh</a>
+            <a href="https://github.com/huynhchitai">Tai Huynh</a>
             <span className="footer-sep">·</span>
-            <a href="https://github.com/0CCHacker">github</a>
+            <a href="https://github.com/huynhchitai">github</a>
             <span className="footer-sep">·</span>
             <a href="mailto:huynhchitai.070306@gmail.com">email</a>
           </p>

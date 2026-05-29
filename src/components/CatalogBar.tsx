@@ -28,7 +28,7 @@ export default function CatalogBar({ here }: { here?: 'home' | 'how' }) {
             How it works
           </Link>
           <a
-            href="https://github.com/0CCHacker"
+            href="https://github.com/huynhchitai"
             className="catalog-nav-link catalog-nav-link--external"
             target="_blank"
             rel="noopener noreferrer"
